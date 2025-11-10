@@ -4,17 +4,8 @@ require_once __DIR__ . '/auth.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 header('Content-Type: application/json');
 
-// require login
-if (!is_logged_in()) { http_response_code(401); echo json_encode(['ok'=>false,'error'=>'unauthenticated']); exit; }
-
 $data = json_decode(file_get_contents('php://input'), true);
 if (!$data) { http_response_code(400); echo json_encode(['ok'=>false,'error'=>'bad json']); exit; }
-
-// CSRF check
-$csrf = $data['csrf'] ?? '';
-if (empty($_SESSION['csrf']) || !hash_equals($_SESSION['csrf'], $csrf)){
-  http_response_code(403); echo json_encode(['ok'=>false,'error'=>'csrf']); exit;
-}
 
 $page = preg_replace('/[^a-z0-9_-]/i','', $data['page'] ?? '');
 $allowed = ['home','szpp','about','contact'];

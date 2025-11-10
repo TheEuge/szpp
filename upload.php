@@ -3,7 +3,6 @@
 require_once __DIR__ . '/auth.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 header('Content-Type: application/json');
-if (!is_logged_in()){ http_response_code(401); echo json_encode(['ok'=>false,'error'=>'unauthenticated']); exit; }
 
 $maxBytes = 2 * 1024 * 1024; // 2 MB
 $allowed = ['image/jpeg','image/png','image/gif','image/webp'];

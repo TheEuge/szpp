@@ -22,7 +22,7 @@ set_exception_handler(function($e) use ($__debug_file){
 try{
   require_once __DIR__ . '/auth.php';
   if (session_status() === PHP_SESSION_NONE) session_start();
-  require_login();
+  // showcase mode: no login required
   $csrf = generate_csrf();
 } catch (Throwable $e){
   file_put_contents($__debug_file, date('c') . " STARTUP-ERROR: " . $e->getMessage() . " in " . $e->getFile() . ':' . $e->getLine() . "\n" . $e->getTraceAsString() . "\n", FILE_APPEND);
