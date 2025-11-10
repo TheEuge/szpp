@@ -1,8 +1,35 @@
 <?php
-require_once __DIR__ . '/auth.php';
-if (session_status() === PHP_SESSION_NONE) session_start();
-require_login();
-$csrf = generate_csrf();
+// Robust startup logging for admin.php to capture errors on remote hosts (Render)
+@mkdir(__DIR__ . '/logs', 0755, true);
+$__debug_file = __DIR__ . '/logs/debug-admin.log';
+ini_set('display_errors', '0');
+error_reporting(E_ALL);
+register_shutdown_function(function() use ($__debug_file){
+  $err = error_get_last();
+  if ($err){
+    $msg = date('c') . " SHUTDOWN: " . $err['message'] . " in " . ($err['file'] ?? '') . ":" . ($err['line'] ?? '') . "\n";
+    file_put_contents($__debug_file, $msg, FILE_APPEND);
+  }
+});
+set_exception_handler(function($e) use ($__debug_file){
+  $msg = date('c') . " EXCEPTION: " . $e->getMessage() . " in " . $e->getFile() . ':' . $e->getLine() . "\n" . $e->getTraceAsString() . "\n";
+  file_put_contents($__debug_file, $msg, FILE_APPEND);
+  http_response_code(500);
+  echo "Server error (see logs/debug-admin.log)";
+  exit;
+});
+
+try{
+  require_once __DIR__ . '/auth.php';
+  if (session_status() === PHP_SESSION_NONE) session_start();
+  require_login();
+  $csrf = generate_csrf();
+} catch (Throwable $e){
+  file_put_contents($__debug_file, date('c') . " STARTUP-ERROR: " . $e->getMessage() . " in " . $e->getFile() . ':' . $e->getLine() . "\n" . $e->getTraceAsString() . "\n", FILE_APPEND);
+  http_response_code(500);
+  echo "Server error during startup (see logs/debug-admin.log)";
+  exit;
+}
 ?>
 <!doctype html>
 <html>
