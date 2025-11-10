@@ -20,10 +20,8 @@ set_exception_handler(function($e) use ($__debug_file){
 });
 
 try{
-  require_once __DIR__ . '/auth.php';
-  if (session_status() === PHP_SESSION_NONE) session_start();
-  // showcase mode: no login required
-  $csrf = generate_csrf();
+  // showcase mode: admin/login removed so this page loads for everyone
+  $csrf = null;
 } catch (Throwable $e){
   file_put_contents($__debug_file, date('c') . " STARTUP-ERROR: " . $e->getMessage() . " in " . $e->getFile() . ':' . $e->getLine() . "\n" . $e->getTraceAsString() . "\n", FILE_APPEND);
   http_response_code(500);
@@ -85,7 +83,7 @@ try{
   </div>
 
   <script>
-    const CSRF = "<?php echo htmlspecialchars($csrf, ENT_QUOTES); ?>";
+  const CSRF = null;
     const editor = document.getElementById('editor');
     const status = document.getElementById('status');
 
@@ -104,7 +102,7 @@ try{
           method: 'POST',
           credentials: 'same-origin',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ page, html, csrf: CSRF })
+          body: JSON.stringify({ page, html })
         });
         const j = await res.json();
         status.textContent = j.ok ? 'Saved' : 'Error: ' + j.error;
