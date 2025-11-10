@@ -11,10 +11,8 @@ $ADMIN_USER = getenv('ADMIN_USER') ?: 'admin';
 // - Else fallback to 'adminpass' for local/dev convenience (change immediately)
 $ADMIN_PASS_HASH = getenv('ADMIN_PASS_HASH') ?: null;
 $ADMIN_PASS_PLAIN = getenv('ADMIN_PASS') ?: null;
-if (empty($ADMIN_PASS_HASH) && empty($ADMIN_PASS_PLAIN)){
-    // fallback default (not secure) - change this in production
-    $ADMIN_PASS_PLAIN = 'adminpass';
-}
+// Do NOT fallback to any default password. Require explicit environment
+// configuration to avoid accidental use of weak defaults.
 
 function verify_admin_password($password){
     global $ADMIN_PASS_HASH, $ADMIN_PASS_PLAIN;
