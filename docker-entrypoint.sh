@@ -35,4 +35,13 @@ if [ -n "${ADMIN_USER}" ]; then
   chown www-data:www-data /var/www/html/.htpasswd || true
 fi
 
+# If .htpasswd still doesn't exist for any reason, create an empty placeholder
+# so Apache's authn_file module doesn't log AH01620 (missing password file).
+if [ ! -f /var/www/html/.htpasswd ]; then
+  echo "Creating placeholder .htpasswd to avoid Apache AH01620 errors"
+  touch /var/www/html/.htpasswd || true
+  chown www-data:www-data /var/www/html/.htpasswd || true
+  chmod 0640 /var/www/html/.htpasswd || true
+fi
+
 exec apache2-foreground
