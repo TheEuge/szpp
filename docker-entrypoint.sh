@@ -44,4 +44,19 @@ if [ ! -f /var/www/html/.htpasswd ]; then
   chmod 0640 /var/www/html/.htpasswd || true
 fi
 
+# If .htaccess still contains Basic Auth directives (leftover from earlier image
+# or manual edits), move it out of the way and replace with a neutral file so
+# Apache will not prompt visitors with a Basic Auth modal.
+if [ -f /var/www/html/.htaccess ]; then
+  if grep -Ei "AuthType|Require valid-user|AuthUserFile" /var/www/html/.htaccess >/dev/null 2>&1; then
+    echo "Found Basic Auth directives in /var/www/html/.htaccess; disabling file"
+    mv /var/www/html/.htaccess /var/www/html/.htaccess.server.disabled || true
+    cat > /var/www/html/.htaccess <<'HT'
+# .htaccess disabled by docker-entrypoint
+# The original file was moved to .htaccess.server.disabled
+HT
+    chown www-data:www-data /var/www/html/.htaccess || true
+  fi
+fi
+
 exec apache2-foreground
