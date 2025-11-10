@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: szpp-web
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    buildCommand: ""
+    startCommand: ""
