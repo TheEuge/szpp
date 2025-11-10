@@ -7,6 +7,7 @@ RUN apt-get update \
     libxml2-dev \
     unzip \
     git \
+    apache2-utils \
   && docker-php-ext-install xml \
   && rm -rf /var/lib/apt/lists/*
 
