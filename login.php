@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     try{
         $u = $_POST['username'] ?? '';
         $p = $_POST['password'] ?? '';
-        if ($u === $ADMIN_USER && $p === $ADMIN_PASS){
+        if ($u === $ADMIN_USER && verify_admin_password($p)){
             $_SESSION['user'] = $u;
                 // regenerate session id (suppress errors if environment disallows)
                 if (function_exists('session_regenerate_id')){
