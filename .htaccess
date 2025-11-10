@@ -1,3 +1,12 @@
+# .htaccess temporarily disabled
+#
+# The repository previously enforced Apache Basic Auth for admin.php. That
+# rule has been moved to `.htaccess.disabled` so that the container will not
+# challenge with HTTP Basic Auth while we debug the PHP admin login flow.
+#
+# To restore Basic Auth, move the contents of `.htaccess.disabled` back into
+# this file and update {SITE_ROOT} to the absolute path to the site on the
+# server (for example /var/www/html/Simple/.htpasswd).
 <Files "admin.php">
   AuthType Basic
   AuthName "Restricted Area"
