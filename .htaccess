@@ -1,0 +1,8 @@
+<Files "admin.php">
+  AuthType Basic
+  AuthName "Restricted Area"
+  AuthUserFile "{SITE_ROOT}/.htpasswd"
+  Require valid-user
+</Files>
+
+# Replace {SITE_ROOT} with the absolute path to this site's directory, e.g. /var/www/html/Simple/.htpasswd

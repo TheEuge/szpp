@@ -1,0 +1,45 @@
+/* Minimal site styles */
+.site-root{min-height:100vh;display:flex;flex-direction:column}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+.container{max-width:900px;margin:0 auto;padding:20px;}
+/* Center primary content inside main */
+main.container{ text-align:center }
+main.container p{ max-width:720px;margin:12px auto }
+.site-header{background:#6c757d;color:#fff;padding:24px 0}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{margin:0;font-size:1.75rem;line-height:1.2}
+.nav{list-style:none;margin:0;padding:0;display:flex;gap:18px;align-items:center}
+.nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px}
+.nav a.active, .nav a:hover{background:rgba(255,255,255,0.12)}
+.site-footer{background:#f4f4f4;color:#333;padding:12px 0;text-align:center;margin-top:auto}
+main h2{margin-top:0}
+/* Feedback form styles */
+#feedback{margin-top:20px;text-align:left}
+#feedback h3{margin-top:0}
+#feedback label{display:block;margin:8px 0 4px;font-weight:600}
+#feedback input[type="text"],
+#feedback input[type="email"],
+#feedback input[type="tel"],
+#feedback textarea{
+	width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;box-sizing:border-box;font-size:0.95rem
+}
+.btn{display:inline-block;margin-top:12px;padding:10px 14px;background:#0b74de;color:#fff;border:none;border-radius:6px;cursor:pointer}
+.btn:hover{opacity:0.95}
+.form-message{margin-top:10px;font-weight:600}
+.form-note{font-size:0.9rem;color:#555;margin-top:8px}
+/* Document section: justified text for long legal text */
+.document{ text-align:justify; line-height:1.6; margin-top:20px; font-family: 'Times New Roman', Times, serif; color:#111 }
+.document h3{ text-align:center; margin-bottom:1rem }
+.document p{ max-width:860px; margin:0 auto 1rem; text-indent:22px }
+.document dl{ max-width:860px; margin:0 auto 1rem }
+.document dt{ font-weight:700; margin-top:0.75rem }
+.document dd{ margin:0 0 0.5rem 1.5rem }
+/* Lettered/alpha list styling (uses lower-latin by default). If you want Cyrillic letters, replace list markers manually. */
+.document ol.alpha{ counter-reset: item; list-style: none; padding-left:0; max-width:860px; margin:0 auto 1rem }
+.document ol.alpha li{ display: block; margin:0 0 0.6rem 0; padding-left:30px; text-indent:0 }
+.document ol.alpha li:before{ counter-increment: item; content: counter(item, lower-latin) ") "; position: absolute; margin-left:-30px }
+.document ol.alpha{ position: relative }
+@media (max-width:800px){
+	.site-header .container{flex-direction:column;align-items:flex-start}
+	.nav{flex-direction:column;width:100%;gap:8px;margin-top:12px}
+}

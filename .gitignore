@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.netlify/
+.env
+npm-debug.log*
+.DS_Store
+Thumbs.db
+/.vscode/
+*.log
+
+# If you don't want uploaded images in Git, uncomment the next line
+# uploads/

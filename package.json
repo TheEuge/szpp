@@ -1,0 +1,11 @@
+{
+  "name": "szpp-site",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "marked": "^5.0.0"
+  },
+  "scripts": {
+    "build": "node build.js"
+  }
+}
